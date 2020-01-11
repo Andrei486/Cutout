@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -188,7 +188,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 650219394}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -3380,11 +3380,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceDrawn: 0
   maxDrawDistance: 0
-  baseMaxDrawDistance: 300
+  baseMaxDrawDistance: 30
   camera: {fileID: 650219394}
-  threshold: 3
+  threshold: 0.1
   materializedColor: {fileID: 2100000, guid: bf5b30edd3497fb4d957ece439d10af7, type: 2}
   temporaryColor: {fileID: 2100000, guid: ddce6f756a560054ca026c2ce28f5427, type: 2}
+  cutoutColor: {fileID: 2100000, guid: 8d5e82a4150b4854e976fc94203a5a36, type: 2}
+  fillColor: {fileID: 2100000, guid: b7f222e1245133d4e9c657b82eaa2cd4, type: 2}
 --- !u!4 &781212131
 Transform:
   m_ObjectHideFlags: 0
