@@ -47,14 +47,17 @@ public class SpawnObject : MonoBehaviour
 			(points.Count == 0)) //do not keep point if it is too close, or if it exceeds draw distance
 			//unless it is the first point
             {
+				LayerMask mask = LayerMask.GetMask("Cutouts", "Terrain", "Default");
+				if (Physics2D.OverlapPoint((Vector2) currentMousePosition, mask) != null){ //check if there is a collider where the new point is
+					Debug.Log("cannot add on top of another object or cutout");
+					return;
+				}
 				if (points.Count != 0){ //increase distance drawn if it is not the first point
 					if (!ic.CheckIfAddable(currentMousePosition, points)){ //separate check because it is long
 						Debug.Log("cannot add, would create self-intersection");
 						return;
 					}
 					distanceDrawn += Vector3.Distance(currentMousePosition, lastMousePosition);
-				} else {
-					
 				}
 					
                 points.Add(currentMousePosition);
@@ -173,7 +176,8 @@ public class SpawnObject : MonoBehaviour
 		GameObject cutout = new GameObject();
 		cutout.name = "Cutout";
 		PolygonCollider2D cutoutCollider = cutout.AddComponent(typeof(PolygonCollider2D)) as PolygonCollider2D;
-		cutout.layer = 8; //layer on which raycast will be used for cutouts
+		cutoutCollider.points = basePoints;
+		cutout.layer = 8; //layer for cutouts
 		MeshFilter meshFilter = cutout.AddComponent(typeof(MeshFilter)) as MeshFilter;
 		Mesh mesh = new Mesh();
 		MeshRenderer meshRenderer = cutout.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
