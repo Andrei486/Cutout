@@ -24,14 +24,16 @@ public class SpawnObject : MonoBehaviour
 	public Material temporaryColor;
 	public Material cutoutColor;
 	public Material fillColor;
+	public PhysicsMaterial2D physMaterial;
 	IntersectionChecker ic;
+	
     // Start is called before the first frame update
     void Start()
     {
         lastMousePosition = new Vector3(0,0,0); //have a Vector3 ready
         Debug.Log(lastMousePosition);
 		ic = new IntersectionChecker();
-		SetupNewObject();
+		SetupNewObject(); //set up a first object to be drawn
     }
 
     // Update is called once per frame
@@ -43,46 +45,52 @@ public class SpawnObject : MonoBehaviour
 			currentMousePosition = camera.ScreenToWorldPoint(new Vector3(currentMousePosition.x, currentMousePosition.y, 10));
 			
             if (((Vector3.Distance(currentMousePosition, lastMousePosition) > threshold) &&
-			(Vector3.Distance(currentMousePosition, lastMousePosition) < maxDrawDistance - distanceDrawn)) ||
-			(points.Count == 0)) //do not keep point if it is too close, or if it exceeds draw distance
-			//unless it is the first point
+			(maxDrawDistance - distanceDrawn > Vector3.Distance(currentMousePosition, lastMousePosition)) ||
+			(points.Count == 0))) //do not keep point if it is too close, or if it exceeds remaining draw distance
+			//unless it is the first point, in which case it should be added regardless
             {
+				
 				LayerMask mask = LayerMask.GetMask("Cutouts", "Terrain", "Default");
-				if (Physics2D.OverlapPoint((Vector2) currentMousePosition, mask) != null){ //check if there is a collider where the new point is
-					Debug.Log("cannot add on top of another object or cutout");
+				Collider2D hitCollider = Physics2D.OverlapPoint((Vector2) currentMousePosition, mask);
+				if (hitCollider != null){
+					Debug.Log("cannot add point on top of object");
 					return;
 				}
-				if (points.Count != 0){ //increase distance drawn if it is not the first point
-					if (!ic.CheckIfAddable(currentMousePosition, points)){ //separate check because it is long
+				
+				if (points.Count != 0){
+					if (!ic.CheckIfAddable(currentMousePosition, points)){ //check self-intersection, separate check because it is long
 						Debug.Log("cannot add, would create self-intersection");
 						return;
 					}
-					distanceDrawn += Vector3.Distance(currentMousePosition, lastMousePosition);
-				}
+					distanceDrawn += Vector3.Distance(currentMousePosition, lastMousePosition); //reduce drawing distance
+				} else {
 					
+				}
+				
+				//add the point to the line
                 points.Add(currentMousePosition);
                 lrenderer.positionCount++;
-				lrenderer.SetPosition(lrenderer.positionCount-1, points[points.Count-1]); //add the point to temporary line
+				lrenderer.SetPosition(lrenderer.positionCount-1, points[points.Count-1]);
 				
 				lastMousePosition = currentMousePosition; //update position of last point
             }
         }
         else
 		{
-            if (points.Count > 1f) {
+            if (points.Count > 1f) { //if there are more than 2 points already drawn, try to materialize it.
                 MaterializeObject();
             }
-			points = new List<Vector3>();
-			lrenderer.positionCount = 0;
         }
-		if (Input.GetMouseButtonDown(1)){
+		if (Input.GetMouseButtonDown(1)){ //on right-click, cancel the drawing
 			Destroy(polygon);
 			SetupNewObject();
 		}
     }
-
+	
+	/**Materializes the currently drawn object; if successful, the corresponding cutout will also be created.*/
     void MaterializeObject()
     {
+		//if the object was not close enough to a loop, delete it
 		if (Vector3.Distance(points[points.Count-1], points[0]) > threshold * 10.0f){ //TODO change threshold
 			Destroy(polygon);
 			SetupNewObject();
@@ -103,12 +111,14 @@ public class SpawnObject : MonoBehaviour
 		
 		pCollider = polygon.AddComponent(typeof(PolygonCollider2D)) as PolygonCollider2D;
 		pCollider.points = ConvertTo2DLoop(points);
+		pCollider.sharedMaterial = physMaterial;
 		
 		//add mesh to fill object
 		MeshFilter meshFilter = polygon.AddComponent(typeof(MeshFilter)) as MeshFilter;
 		Mesh mesh = new Mesh();
 		MeshRenderer meshRenderer = polygon.AddComponent(typeof(MeshRenderer)) as MeshRenderer;
 		
+		//initialization for the Triangulator, to fill the object
 		Vector2[] points2d = new Vector2[points.Count + 1];
 		for (int i=0;i<points.Count; i++){
 			points2d[i] = (Vector2) points[i];
@@ -149,6 +159,7 @@ public class SpawnObject : MonoBehaviour
 		SetupNewObject();
     }
 	
+	/**Creates a new object to which components will be added as they are drawn/materialized. Also resets the necessary variables. */
 	void SetupNewObject()
 	{
 		points = new List<Vector3>();
@@ -156,6 +167,7 @@ public class SpawnObject : MonoBehaviour
 		maxDrawDistance = baseMaxDrawDistance;
 		distanceDrawn = 0f;
 		polygon = new GameObject();
+		polygon.transform.Translate(new Vector3(0, 0, -1));
 		polygon.name = "Drawn Object";
         lrenderer = polygon.AddComponent(typeof(LineRenderer)) as LineRenderer;
         lrenderer.startWidth = 0.1f;
@@ -166,6 +178,7 @@ public class SpawnObject : MonoBehaviour
 		lrenderer.material = temporaryColor;
 	}
 	
+	/**Creates the cutout corresponding to an array of points, ie a polygon.*/
 	void CreateCutout(Vector2[] basePoints){
 		Vector2[] points = new Vector2[basePoints.Length + 1];
 		for (int i=0;i<basePoints.Length; i++){
@@ -208,6 +221,7 @@ public class SpawnObject : MonoBehaviour
 		meshRenderer.material = cutoutColor;
 	}
 	
+	/**Convenience method to turn a List<Vector3> into a Vector2[], while also making into a true loop.*/
 	Vector2[] ConvertTo2DLoop(List<Vector3> points3d)
 	{
 		Vector2[] points2d = new Vector2[points3d.Count+1];
