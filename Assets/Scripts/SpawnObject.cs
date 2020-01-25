@@ -20,6 +20,7 @@ public class SpawnObject : MonoBehaviour
 	public float baseMaxDrawDistance;
     public Camera camera;
     public float threshold;
+	public float density;
 	public Material materializedColor;
 	public Material temporaryColor;
 	public Material cutoutColor;
@@ -49,7 +50,7 @@ public class SpawnObject : MonoBehaviour
 			//unless it is the first point, in which case it should be added regardless
             {
 				
-				LayerMask mask = LayerMask.GetMask("Cutouts", "Terrain", "Default");
+				LayerMask mask = LayerMask.GetMask("Cutouts", "Terrain", "Undrawable");
 				Collider2D hitCollider = Physics2D.OverlapPoint((Vector2) currentMousePosition, mask);
 				if (hitCollider != null){
 					Debug.Log("cannot add point on top of object");
@@ -112,6 +113,7 @@ public class SpawnObject : MonoBehaviour
 		
 		pCollider = polygon.AddComponent(typeof(PolygonCollider2D)) as PolygonCollider2D;
 		pCollider.points = ConvertTo2DLoop(points);
+		pCollider.density = density;
 		pCollider.sharedMaterial = physMaterial;
 		
 		//add mesh to fill object

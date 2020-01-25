@@ -27,7 +27,8 @@ public class Health : MonoBehaviour
 		}
 		lastDamageTime = Time.time;
 		this.health -= damage;
-		Debug.Log("Took " + damage + " damage");
+		Debug.Log(this.gameObject.name +" took " + damage + " damage");
+		return;
 	}
 	
 	public void ShowHealthBar(){
