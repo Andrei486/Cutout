@@ -31,7 +31,6 @@ public class SpawnObject : MonoBehaviour
     void Start()
     {
         lastMousePosition = new Vector3(0,0,0); //have a Vector3 ready
-        Debug.Log(lastMousePosition);
 		ic = new IntersectionChecker();
 		SetupNewObject(); //set up a first object to be drawn
     }
@@ -98,6 +97,7 @@ public class SpawnObject : MonoBehaviour
 		}
 		
 		//finalize creation of previous object
+		polygon.tag = "Drawn";
 		lrenderer.material = materializedColor;
 		lrenderer.startWidth = 0.05f;
 		lrenderer.endWidth = 0.05f;
@@ -106,6 +106,7 @@ public class SpawnObject : MonoBehaviour
 		//create rigidbody, collider and fill shape
 		rb = polygon.AddComponent(typeof(Rigidbody2D)) as Rigidbody2D;
 		rb.gravityScale = 1.0f;
+		rb.drag = 0.0f;
 		rb.isKinematic = false;
 		rb.useAutoMass = true;
 		
@@ -153,7 +154,6 @@ public class SpawnObject : MonoBehaviour
 		//create white cutout on background
 		CreateCutout(pCollider.points);
 		
-		Debug.Log("Total distance: " + distanceDrawn);
 		Debug.Log("materialized");
         //create new object for later
 		SetupNewObject();

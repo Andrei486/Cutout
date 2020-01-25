@@ -23,6 +23,15 @@ TextureImporter:
   - first:
       213: 8560742418198654694
     second: newFloorTileMap_6
+  - first:
+      213: 3545532933026529531
+    second: newFloorTileMap_7
+  - first:
+      213: -6267113158507323145
+    second: newFloorTileMap_8
+  - first:
+      213: 9137092287215963536
+    second: newFloorTileMap_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -228,6 +237,90 @@ TextureImporter:
       bones: []
       spriteID: eec7a5902a4ba2344bcc1b0e5249ec0a
       internalID: 8560742418198654694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newFloorTileMap_4
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31dcdaa889a506e4487f4eec18623226
+      internalID: -8713588627376812465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newFloorTileMap_7
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6fb92469c3c9914784a5c15300d294d
+      internalID: 3545532933026529531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newFloorTileMap_8
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fdd5e644a4b98548a7c7cd1c66fd4e5
+      internalID: -6267113158507323145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: newFloorTileMap_9
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 80
+        width: 80
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39ca8675ed11b7047b5c68ec275f2146
+      internalID: 9137092287215963536
       vertices: []
       indices: 
       edges: []

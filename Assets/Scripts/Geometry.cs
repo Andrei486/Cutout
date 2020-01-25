@@ -182,8 +182,6 @@ namespace Geometry {
 			//returns true if adding the point does not create a self-intersecting polygon
 			//false otherwise
 			Vector3 lastPoint = points[points.Count - 1];
-			Debug.Log("new point: " + point1);
-			Debug.Log("last point: " + lastPoint);
 			for(int i=0;i<points.Count-2;i++){
 				if (CheckOneIntersection(point1, lastPoint, points[i], points[i+1])){
 					return false;

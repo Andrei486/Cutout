@@ -19,7 +19,16 @@ public class PlayerController : MonoBehaviour
 		}
     }
 	
+	void OnCollisionEnter2D(Collision2D collision){
+		if (collision.collider.tag != "Drawn"){
+			return;
+		}
+		float momentum = collision.rigidbody.velocity.magnitude * collision.rigidbody.mass;
+		healthScript.TakeDamage(momentum);
+	}
+	
 	public void Die(){
 		//activate ragdoll
+		Destroy(this.gameObject);
 	}
 }
