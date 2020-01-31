@@ -31,6 +31,6 @@ public class DrawGauge : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		remainingDistance = 1f - (controller.GetComponent<SpawnObject>().distanceDrawn / controller.GetComponent<SpawnObject>().maxDrawDistance);
+		remainingDistance = 1f - (controller.GetComponent<DrawObject>().distanceDrawn / controller.GetComponent<DrawObject>().maxDrawDistance);
     }
 }

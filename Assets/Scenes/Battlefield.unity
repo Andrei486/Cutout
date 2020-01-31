@@ -8278,6 +8278,7 @@ GameObject:
   - component: {fileID: 781212130}
   - component: {fileID: 781212132}
   - component: {fileID: 781212133}
+  - component: {fileID: 781212134}
   m_Layer: 0
   m_Name: Game Controller
   m_TagString: GameController
@@ -8297,17 +8298,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39779da396f0f374d9922d96b9b26ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceDrawn: 0
-  maxDrawDistance: 0
-  baseMaxDrawDistance: 6
-  camera: {fileID: 650219394}
-  threshold: 0.1
+  drawnPrefab: {fileID: 8897787445674061096, guid: e50122d417c2f4a4180d80c72904099d,
+    type: 3}
   density: 1
-  materializedColor: {fileID: 2100000, guid: bf5b30edd3497fb4d957ece439d10af7, type: 2}
-  temporaryColor: {fileID: 2100000, guid: ddce6f756a560054ca026c2ce28f5427, type: 2}
   cutoutColor: {fileID: 2100000, guid: 8d5e82a4150b4854e976fc94203a5a36, type: 2}
-  fillColor: {fileID: 2100000, guid: b7f222e1245133d4e9c657b82eaa2cd4, type: 2}
-  physMaterial: {fileID: 6200000, guid: 53f1a73a3caa27f48bf1da2554ccfb6f, type: 2}
+  loopThreshold: 0.7
 --- !u!4 &781212131
 Transform:
   m_ObjectHideFlags: 0
@@ -8352,6 +8347,25 @@ MonoBehaviour:
   spawnPositions:
   - {x: 11, y: 0.9, z: 0}
   - {x: -11, y: 0.9, z: 0}
+--- !u!114 &781212134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781212129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6a0f717c78b9d42858b69e6666dfd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceDrawn: 0
+  maxDrawDistance: 0
+  baseMaxDrawDistance: 5
+  camera: {fileID: 650219394}
+  threshold: 0.3
+  density: 1
+  temporaryColor: {fileID: 2100000, guid: ddce6f756a560054ca026c2ce28f5427, type: 2}
 --- !u!1 &791390359
 GameObject:
   m_ObjectHideFlags: 0
