@@ -6,14 +6,12 @@ using System;
 public class PlayerController : MonoBehaviour
 {
 	public Health healthScript;
+	public float minimumDamageReaction;
 	Animator animator;
-	System.Random rng;
     // Start is called before the first frame update
     void Start()
     {
-        healthScript = this.gameObject.GetComponent<Health>();
 		animator = this.gameObject.transform.Find("Kliff_Model").GetComponent<Animator>();
-		rng = new System.Random();
 		StartCoroutine(RandomIdle());
     }
 
@@ -31,6 +29,9 @@ public class PlayerController : MonoBehaviour
 		}
 		float momentum = collision.relativeVelocity.magnitude * collision.rigidbody.mass;
 		healthScript.TakeDamage(momentum);
+		if (momentum > minimumDamageReaction){
+			animator.SetTrigger("Hit");
+		}
 	}
 	
 	public void Die(){
@@ -41,8 +42,7 @@ public class PlayerController : MonoBehaviour
 	IEnumerator RandomIdle(){
 		while (true) {
 			if (animator.GetCurrentAnimatorStateInfo(0).IsName("Basic Idle")){
-				double randomness = rng.NextDouble();
-				Debug.Log(randomness);
+				double randomness = new System.Random((int) DateTime.Now.Ticks).NextDouble(); //so both players have different pseudo-random generators
 				if (randomness < 0.1f){
 					animator.ResetTrigger("Idle2");
 					animator.SetTrigger("Idle1");

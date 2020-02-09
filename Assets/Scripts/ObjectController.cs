@@ -23,7 +23,7 @@ public class ObjectController : MonoBehaviour
     void Update()
     {
 		actualMassCenter = this.gameObject.transform.TransformPoint(this.GetComponent<Rigidbody2D>().centerOfMass);
-        arrow.transform.position = new Vector3(actualMassCenter.x, screenTop, 2f);
+        arrow.transform.position = new Vector3(actualMassCenter.x, screenTop, -2f);
 		arrow.transform.rotation = Quaternion.EulerAngles(0,0,0);
 		if (actualMassCenter.y >= screenTop){
 			arrow.GetComponent<SpriteRenderer>().enabled = true;
@@ -31,7 +31,7 @@ public class ObjectController : MonoBehaviour
 			arrow.GetComponent<SpriteRenderer>().enabled = false;
 		}
 		if (Time.time - startTime >= totalLifetime){
-			Destroy(this.gameObject); //call Disappear here instead
+			Disappear();
 		}
     }
 	

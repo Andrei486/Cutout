@@ -8,6 +8,7 @@ public class Health : MonoBehaviour
 	public float maxHealth;
 	public float minDamageInterval;
 	float lastDamageTime;
+	float healthFraction;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class Health : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        healthFraction = health/maxHealth;
     }
 	
 	public void TakeDamage(float damage){
@@ -29,9 +30,5 @@ public class Health : MonoBehaviour
 		this.health -= damage;
 		Debug.Log(this.gameObject.name +" took " + damage + " damage");
 		return;
-	}
-	
-	public void ShowHealthBar(){
-		
 	}
 }

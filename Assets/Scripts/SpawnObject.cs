@@ -89,7 +89,7 @@ public class SpawnObject : MonoBehaviour
 		
 		//create white cutout on background
 		CreateCutout(pCollider.points);
-		
+		GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>().ActivateRandomDrawArea();
 		Debug.Log("materialized");
     }
 	

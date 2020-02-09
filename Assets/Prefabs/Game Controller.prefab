@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3186818015461704368
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3186818015461704370}
+  - component: {fileID: 3186818015461704371}
+  - component: {fileID: 3186818015461704373}
+  - component: {fileID: 3186818015461704372}
+  - component: {fileID: 3186818015461704375}
+  m_Layer: 9
+  m_Name: Game Controller
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3186818015461704370
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186818015461704368}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3186818015461704371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186818015461704368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39779da396f0f374d9922d96b9b26ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawnPrefab: {fileID: 8897787445674061096, guid: e50122d417c2f4a4180d80c72904099d,
+    type: 3}
+  density: 1
+  cutoutColor: {fileID: 2100000, guid: 8d5e82a4150b4854e976fc94203a5a36, type: 2}
+  loopThreshold: 0.7
+--- !u!114 &3186818015461704373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186818015461704368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffeec671ec3394c41ae8713274f1ca0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fillTexture: {fileID: 2800000, guid: 06cded22b24089c44b9c83c9b72f6082, type: 3}
+  backgroundTexture: {fileID: 2800000, guid: ec812e501307dfa43ae9eb9e746f77e4, type: 3}
+--- !u!114 &3186818015461704372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186818015461704368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a94de0b0811c2f48b30016fa1ba6424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 4325486964250488437, guid: dda26e78722c03b4a9a9aa74ecf735d2, type: 3}
+  spawnPositions:
+  - {x: 11, y: 0.9, z: 0}
+  - {x: -11, y: 0.9, z: 0}
+  maxPlayerHealth: 30
+  drawAreas: {fileID: 0}
+--- !u!114 &3186818015461704375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3186818015461704368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6a0f717c78b9d42858b69e6666dfd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceDrawn: 0
+  maxDrawDistance: 0
+  baseMaxDrawDistance: 5
+  camera: {fileID: 0}
+  threshold: 0.1
+  density: 1
+  temporaryColor: {fileID: 2100000, guid: ddce6f756a560054ca026c2ce28f5427, type: 2}

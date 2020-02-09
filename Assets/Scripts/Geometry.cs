@@ -178,12 +178,27 @@ namespace Geometry {
 			return true;
 		}
 		
-		public bool CheckIfAddable(Vector3 point1, List<Vector3> points){
-			//returns true if adding the point does not create a self-intersecting polygon
-			//false otherwise
+		private bool CheckThroughUndrawable(Vector3 point1, Vector3 point2, LayerMask layers, float threshold){
+			float lineLength = Vector3.Distance(point1, point2);
+			Vector3 point = point1;
+			while(Vector3.Distance(point1, point) < lineLength){ //check most possible points along the line
+				point += (point2 - point1) * threshold;
+				if (Physics2D.OverlapPoint((Vector2) point, layers) != null){ //if collider overlaps, the line does go through something: stop there
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		
+		public bool CheckIfAddable(Vector3 newPoint, List<Vector3> points, float threshold){
+			/**returns true if adding the point does not create a self-intersecting polygon, false otherwise*/
 			Vector3 lastPoint = points[points.Count - 1];
-			for(int i=0;i<points.Count-2;i++){
-				if (CheckOneIntersection(point1, lastPoint, points[i], points[i+1])){
+			if (CheckThroughUndrawable(newPoint, lastPoint, LayerMask.GetMask("Cutouts", "Terrain"), threshold)){
+					return false;
+			}
+			for(int i=0;i<points.Count-2;i++){ //check the new line against every previous one
+				if (CheckOneIntersection(newPoint, lastPoint, points[i], points[i+1])){
 					return false;
 				}
 			}

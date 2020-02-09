@@ -44,14 +44,19 @@ public class DrawObject : MonoBehaviour
 			//unless it is the first point, in which case it should be added regardless
             {
 				
-				LayerMask mask = LayerMask.GetMask("Cutouts", "Terrain", "Undrawable");
+				LayerMask mask = LayerMask.GetMask("Cutouts", "Terrain");
 				Collider2D hitCollider = Physics2D.OverlapPoint((Vector2) currentMousePosition, mask);
 				if (hitCollider != null){
 					return;
 				}
+				mask = LayerMask.GetMask("Draw Area");
+				hitCollider = Physics2D.OverlapPoint((Vector2) currentMousePosition, mask);
+				if (hitCollider == null){
+					return;
+				}
 				
 				if (points.Count != 0){
-					if (!ic.CheckIfAddable(currentMousePosition, points)){ //check self-intersection, separate check because it is long
+					if (!ic.CheckIfAddable(currentMousePosition, points, threshold)){ //check self-intersection, separate check because it is long
 						return;
 					}
 					distanceDrawn += Vector3.Distance(currentMousePosition, lastMousePosition); //reduce drawing distance
