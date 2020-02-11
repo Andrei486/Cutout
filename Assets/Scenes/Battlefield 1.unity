@@ -2965,7 +2965,17 @@ PrefabInstance:
     - target: {fileID: 3186818015461704372, guid: e8b32a73c4c3ed9498d230afd62eba4f,
         type: 3}
       propertyPath: maxPlayerHealth
-      value: 10
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186818015461704372, guid: e8b32a73c4c3ed9498d230afd62eba4f,
+        type: 3}
+      propertyPath: spawnPositions.Array.data[0].y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3186818015461704372, guid: e8b32a73c4c3ed9498d230afd62eba4f,
+        type: 3}
+      propertyPath: spawnPositions.Array.data[1].y
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3186818015461704375, guid: e8b32a73c4c3ed9498d230afd62eba4f,
         type: 3}
@@ -3438,7 +3448,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824295532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5440974, y: 4.9110403, z: -14.072187}
+  m_LocalPosition: {x: -3.5440974, y: 4.9110403, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1648877047}

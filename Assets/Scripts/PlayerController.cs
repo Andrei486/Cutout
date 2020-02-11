@@ -5,6 +5,7 @@ using System;
 
 public class PlayerController : MonoBehaviour
 {
+	public int playerNumber;
 	public Health healthScript;
 	public float minimumDamageReaction;
 	Animator animator;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		//Debug.Log(this.healthScript.health);
         if (this.healthScript.health <= 0.0f){
 			Die();
 		}
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
 	
 	public void Die(){
 		//activate ragdoll
+		StartCoroutine(GameController.EndGame(playerNumber));
 		Destroy(this.gameObject);
 	}
 	

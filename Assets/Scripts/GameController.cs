@@ -20,10 +20,12 @@ public class GameController : MonoBehaviour
 		
         players[0] = Instantiate(player, this.gameObject.transform);
 		players[0].name = "Player 1";
+		players[0].GetComponent<PlayerController>().playerNumber = 0;
 		players[0].transform.position = spawnPositions[0];
 		
 		players[1] = Instantiate(player, this.gameObject.transform);
 		players[1].name = "Player 2";
+		players[1].GetComponent<PlayerController>().playerNumber = 1;
 		players[1].transform.position = spawnPositions[1];
 		
 		foreach(GameObject player in players){
@@ -40,24 +42,8 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (!ended){
-			if (players[0] == null){
-				Debug.Log("Player 2 wins!");
-				GameObject.FindGameObjectsWithTag("Win Text")[1].GetComponent<Text>().enabled = true;
-				ended = true;
-				StartCoroutine(EndGame());
-			}
-			if (players[1] == null){
-				Debug.Log("Player 1 wins!");
-				GameObject.FindGameObjectsWithTag("Win Text")[0].GetComponent<Text>().enabled = true;
-				ended = true;
-				StartCoroutine(EndGame());
-			}
-		}
-		else {
-			if (Input.GetKeyDown("space")){
-				Application.Quit();
-			}
+		if (Input.GetKeyDown(KeyCode.Space)){
+			Application.Quit();
 		}
     }
 	
@@ -83,8 +69,12 @@ public class GameController : MonoBehaviour
 		}
 	}
 	
-	private IEnumerator EndGame(){
-		
+	public static IEnumerator EndGame(int loser){
+		int winner = 1 - loser;
+		GameController controller = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
+		Debug.Log(controller.players[winner].name + " wins!");
+		GameObject.FindGameObjectsWithTag("Win Text")[0].transform.GetChild(winner).gameObject.GetComponent<Text>().enabled = true;
+		controller.ended = true;
 		//show the win text
 		Time.timeScale = 0.1f;
 		yield return new WaitForSeconds(0.5f);

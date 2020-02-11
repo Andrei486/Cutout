@@ -23,19 +23,8 @@ public class TitleScreen : MonoBehaviour
 	
 	void StartRandomBattlefield(){
 		int sceneNo = new System.Random().Next(0, SceneManager.sceneCountInBuildSettings - 1) + 1;
-		StartCoroutine(LoadBattlefield(sceneNo));
+		SceneManager.LoadScene(sceneNo, LoadSceneMode.Single);
 	}
-	
-	IEnumerator LoadBattlefield(int index)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(index, LoadSceneMode.Single);
-        // wait until the asynchronous scene fully loads
-        while (!asyncLoad.isDone)
-        {
-			Debug.Log("");
-            yield return null;
-        }
-    }
 	
 	void ShowControls(){
 		

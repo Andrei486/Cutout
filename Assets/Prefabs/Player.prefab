@@ -50,6 +50,10 @@ MonoBehaviour:
   health: 0
   maxHealth: 50
   minDamageInterval: 0.2
+  healthBarSize: {x: 100, y: 20}
+  healthBarColor: {r: 0, g: 1, b: 0.46703124, a: 1}
+  healthBarBackground: {r: 0, g: 0, b: 0, a: 0.2509804}
+  healthFont: {fileID: 12800000, guid: 9c906e9cd29d48b46a74b596ffad6908, type: 3}
 --- !u!114 &4325486964250488440
 MonoBehaviour:
   m_ObjectHideFlags: 0
