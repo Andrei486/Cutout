@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 		//Debug.Log(this.healthScript.health);
-        if (this.healthScript.health <= 0.0f){
+        if (this.healthScript.GetHealth() <= 0.0f){
 			Die();
 		}
     }

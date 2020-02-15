@@ -1,17 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+
+/**
+Namespace for utility classes: Triangulator and IntersectionChecker.
+*/
 namespace Geometry {
 	
+	/**
+	Triangulator class taken from the Unity Community Wiki.
+	All credit goes to runevision for this class.
+	*/
 	public class Triangulator
 	{
-		//Triangulator class taken from the Unity Community Wiki.
-		//All credit goes to runevision for this class.
 		private List<Vector2> m_points = new List<Vector2>();
-	 
+		
+		/**
+		Constructor for a Triangulator with the specified points.
+		*/
 		public Triangulator (Vector2[] points) {
 			m_points = new List<Vector2>(points);
 		}
-	 
+		/**
+		Returns the triangles for a mesh filling the given array of points.
+		*/
 		public int[] Triangulate() {
 			List<int> indices = new List<int>();
 	 
@@ -110,13 +121,16 @@ namespace Geometry {
 			return ((aCROSSbp >= 0.0f) && (bCROSScp >= 0.0f) && (cCROSSap >= 0.0f));
 		}
 	}
-	
-		//theory for this comes from:
-		//https://www.topcoder.com/community/competitive-programming/tutorials/geometry-concepts-line-intersection-and-its-applications/
-		//WARNING: Intersections at endpoints are allowed. Shouldn't be an issue in practice, but it's there.
+	/**
+	theory for this comes from:
+	https://www.topcoder.com/community/competitive-programming/tutorials/geometry-concepts-line-intersection-and-its-applications/
+	WARNING: Intersections at endpoints are allowed. Shouldn't be an issue in practice, but it's there.
+	*/
 	public class IntersectionChecker{
+		/**
+		Returns whether two line segments intersect in the XY plane (setting z = 0).
+		*/
 		private bool CheckOneIntersection(Vector3 point1, Vector3 point2, Vector3 point3, Vector3 point4){
-			//checks whether two line segments intersect in the XY plane (setting z=0)
 			//get line equations as Ax + By = C
 			float A1 = point2.y - point1.y;
 			float B1 = point1.x - point2.x;
@@ -137,7 +151,7 @@ namespace Geometry {
 			
 			//check if it is within segments by elimination of cases
 			if (point1.x <= point2.x){
-				if ((x < point1.x) || (point2.x < x)){
+				if ((x < point1.x) || (point2.x < x)){ //if point isn't between segment limits
 					return false;
 				}
 			} else{
@@ -178,11 +192,15 @@ namespace Geometry {
 			return true;
 		}
 		
+		/**
+		Returns true if the line specified by the two points passes through an undrawable location,
+		as specified by the given LayerMask, and false otherwise.
+		*/
 		private bool CheckThroughUndrawable(Vector3 point1, Vector3 point2, LayerMask layers, float threshold){
 			float lineLength = Vector3.Distance(point1, point2);
 			Vector3 point = point1;
 			while(Vector3.Distance(point1, point) < lineLength){ //check most possible points along the line
-				point += (point2 - point1) * threshold;
+				point += (point2 - point1).normalized * threshold;
 				if (Physics2D.OverlapPoint((Vector2) point, layers) != null){ //if collider overlaps, the line does go through something: stop there
 					return true;
 				}
@@ -192,8 +210,11 @@ namespace Geometry {
 		
 		
 		public bool CheckIfAddable(Vector3 newPoint, List<Vector3> points, float threshold){
-			/**returns true if adding the point does not create a self-intersecting polygon, false otherwise*/
+			/**
+			Returns true if adding the point does not create a self-intersecting polygon, false otherwise.
+			*/
 			Vector3 lastPoint = points[points.Count - 1];
+			//we only need to check if the most recent point causes a problem, the rest was correct.
 			if (CheckThroughUndrawable(newPoint, lastPoint, LayerMask.GetMask("Cutouts", "Terrain"), threshold)){
 					return false;
 			}

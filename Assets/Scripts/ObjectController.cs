@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+A script to be attached to drawn objects.
+*/
 public class ObjectController : MonoBehaviour
 {
-	public float totalLifetime;
+	public float totalLifetime; //set in Inspector: in seconds
 	GameObject arrow;
 	float screenTop;
 	GameObject camera;
@@ -22,6 +25,7 @@ public class ObjectController : MonoBehaviour
 
     void Update()
     {
+		//check if and where the offscreen arrow should be shown
 		actualMassCenter = this.gameObject.transform.TransformPoint(this.GetComponent<Rigidbody2D>().centerOfMass);
         arrow.transform.position = new Vector3(actualMassCenter.x, screenTop, -2f);
 		arrow.transform.rotation = Quaternion.EulerAngles(0,0,0);
@@ -30,6 +34,8 @@ public class ObjectController : MonoBehaviour
 		} else {
 			arrow.GetComponent<SpriteRenderer>().enabled = false;
 		}
+		
+		//check if lifetime has expired
 		if (Time.time - startTime >= totalLifetime){
 			Disappear();
 		}

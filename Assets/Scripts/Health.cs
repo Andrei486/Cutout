@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/**
+A script to be attached to each player. Handles taking damage and showing the player's HP bar.
+*/
 public class Health : MonoBehaviour
 {
-	public float health = 1.0f; //nonzero value to start
+	float health = 1.0f; //nonzero value to start
 	public float maxHealth;
-	public float minDamageInterval;
-	public Vector2 healthBarSize;
-	public Color healthBarColor;
-	public Color healthBarBackground;
-	public Font healthFont;
+	public float minDamageInterval; //set in Inspector
+	
+	public Vector2 healthBarSize; //set in Inspector
+	public Color healthBarColor; //set in Inspector
+	public Color healthBarBackground; //set in Inspector
+	public Font healthFont; //set in Inspector
 	Texture2D healthBarTexture;
 	Texture2D healthBarBG;
+	Vector2 healthBarPosition;
+	
 	float lastDamageTime;
 	float healthFraction;
-	Vector2 healthBarPosition;
+	
 	Camera camera;
 	float playerHeight;
     // Start is called before the first frame update
-    void Start()
+    
+	void Start()
     {
 		health = maxHealth;
         lastDamageTime = -100.0f; //negative value to enable taking damage immediately
@@ -45,6 +52,7 @@ public class Health : MonoBehaviour
 		healthBarPosition += new Vector2(-0.5f * healthBarSize.x, healthBarSize.y);
     }
 	
+	/** Makes the player take the specified amount of damage, if possible. */
 	public void TakeDamage(float damage){
 		if (Time.time - lastDamageTime < minDamageInterval){
 			return;
@@ -55,6 +63,12 @@ public class Health : MonoBehaviour
 		return;
 	}
 	
+	/** Returns the player's remaining health. */
+	public float GetHealth(){
+		return health;
+	}
+	
+	//Activates every frame when GUI is drawn
 	void OnGUI(){
 		GUI.skin.label.alignment = TextAnchor.MiddleCenter;
 		GUI.skin.label.font = healthFont;
@@ -71,6 +85,7 @@ public class Health : MonoBehaviour
 		
 	}
 	
+	/** Returns a monochrome fill texture with the specified color and dimensions. */
 	Texture2D CreateFillTexture(Color fillColor, int x, int y){
 		Color[] pixels = new Color[x * y];
 		for(int i = 0; i < pixels.Length; i++){

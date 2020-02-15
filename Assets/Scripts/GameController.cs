@@ -4,13 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
+/**
+A script to be attached to the GameController. Handles game setup and win conditions among others.
+*/
 public class GameController : MonoBehaviour
 {
-	public GameObject player;
-	public Vector3[] spawnPositions;
+	public GameObject player; //set in Inspector: player prefab for the rightmost player (player 1)
+	public Vector3[] spawnPositions; //set in Inspector: places to spawn the players, in order
+	public float maxPlayerHealth; //set in Inspector
+	public GameObject drawAreas; //set in Inspector: the parent to all drawable areas
 	GameObject[] players;
-	public float maxPlayerHealth;
-	public GameObject drawAreas;
 	bool ended;
     // Start is called before the first frame update
     void Start()
@@ -47,6 +50,10 @@ public class GameController : MonoBehaviour
 		}
     }
 	
+	/**
+	Attempts to activate the draw area specified by the index, and returns true if the activation was successful.
+	If the draw area was already active (or the index is out of range), does nothing but returns false.
+	*/
 	public bool ActivateDrawArea(int index){
 		if (index < 0 || index >= drawAreas.transform.childCount){
 			return false; //for some reason an impossible index was passed
@@ -62,6 +69,9 @@ public class GameController : MonoBehaviour
 		return true;
 	}
 	
+	/**
+	Activates a random draw area from the list, different from the currently activated one.
+	*/
 	public void ActivateRandomDrawArea(){
 		System.Random rng = new System.Random();
 		while(!ActivateDrawArea(rng.Next(0, drawAreas.transform.childCount))){
@@ -69,6 +79,9 @@ public class GameController : MonoBehaviour
 		}
 	}
 	
+	/**
+	Ends the game and causes effects to play.
+	*/
 	public static IEnumerator EndGame(int loser){
 		int winner = 1 - loser;
 		GameController controller = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
