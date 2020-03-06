@@ -14,7 +14,7 @@ public class DrawObject : MonoBehaviour
     List<Vector3> points;
 	float distanceDrawn;
 	float maxDrawDistance;
-	
+
 	GameObject polygon;
     LineRenderer lrenderer;
 	Rigidbody2D rb;

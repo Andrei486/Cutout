@@ -14,6 +14,7 @@ public class SpawnObject : MonoBehaviour
     GameObject polygon;
 	Rigidbody2D rb;
 	PolygonCollider2D pCollider;
+	GameController controller;
 	public GameObject drawnPrefab; //set in Inspector: prefab to create objects from
 	public float density; //set in Inspector: density of created objects
 	public Material cutoutColor; //set in Inspector: material to fill the cutout with (usually white); should be monochrome
@@ -22,7 +23,7 @@ public class SpawnObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		
+		controller = GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>();
     }
 
     // Update is called once per frame
@@ -102,6 +103,10 @@ public class SpawnObject : MonoBehaviour
 		CreateCutout(pCollider.points);
 		GameObject.FindGameObjectsWithTag("GameController")[0].GetComponent<GameController>().ActivateRandomDrawArea();
 		Debug.Log("materialized");
+		
+		float area = tr.MeshArea(mesh);
+		controller.filledAreas[controller.currentArea] += area;
+		Debug.Log(area);
     }
 	
 	/**Creates the cutout corresponding to an array of points, ie a polygon.*/

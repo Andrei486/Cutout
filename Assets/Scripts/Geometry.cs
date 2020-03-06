@@ -120,6 +120,23 @@ namespace Geometry {
 	 
 			return ((aCROSSbp >= 0.0f) && (bCROSScp >= 0.0f) && (cCROSSap >= 0.0f));
 		}
+		
+		public float MeshArea(Mesh mesh){
+			var triangles = mesh.triangles;
+			var vertices = mesh.vertices;
+
+			double sum = 0.0;
+
+			for(int i = 0; i < triangles.Length; i += 3) {
+				Vector3 corner = vertices[triangles[i]];
+				Vector3 a = vertices[triangles[i + 1]] - corner;
+				Vector3 b = vertices[triangles[i + 2]] - corner;
+
+				sum += Vector3.Cross(a, b).magnitude;
+			}
+
+			return (float)(sum / 2.0);
+		}
 	}
 	/**
 	theory for this comes from:

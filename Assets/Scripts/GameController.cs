@@ -13,7 +13,10 @@ public class GameController : MonoBehaviour
 	public Vector3[] spawnPositions; //set in Inspector: places to spawn the players, in order
 	public float maxPlayerHealth; //set in Inspector
 	public GameObject drawAreas; //set in Inspector: the parent to all drawable areas
+	public int currentArea;
 	GameObject[] players;
+	float[] maxAreas;
+	public float[] filledAreas;
 	bool ended;
     // Start is called before the first frame update
     void Start()
@@ -39,6 +42,17 @@ public class GameController : MonoBehaviour
 		//flip the second player
 		Vector3 scale = players[1].transform.localScale;
 		players[1].transform.localScale = new Vector3(scale.x, -scale.y, scale.z);
+		
+		maxAreas = new float[drawAreas.transform.childCount];
+		filledAreas = new float[drawAreas.transform.childCount];
+		for (int i = 0; i < maxAreas.Length; i++){
+			foreach (Transform subArea in drawAreas.transform.GetChild(i)){
+				BoxCollider2D box = subArea.GetComponent<BoxCollider2D>();
+				maxAreas[i] += box.size.x * box.size.y * subArea.localScale.x * subArea.localScale.y;
+			}
+			Debug.Log(maxAreas[i]);
+		}
+
 		ActivateDrawArea(0);
     }
 
@@ -61,10 +75,15 @@ public class GameController : MonoBehaviour
 		if (drawAreas.transform.GetChild(index).gameObject.activeSelf){
 			return false; //if the specified area is already the active one
 		}
+
+		if (filledAreas[index] / maxAreas[index] > 0.9){
+			return false; //if the draw area is too full
+		}
 		
 		foreach(Transform child in drawAreas.transform){
 			child.gameObject.SetActive(false); //disable all random areas
 		}
+		currentArea = index;
 		drawAreas.transform.GetChild(index).gameObject.SetActive(true); //then enable only the correct one
 		return true;
 	}
@@ -74,6 +93,16 @@ public class GameController : MonoBehaviour
 	*/
 	public void ActivateRandomDrawArea(){
 		System.Random rng = new System.Random();
+		int selectableAreas = 0;
+		for (int i = 0; i < maxAreas.Length; i++){
+			if (filledAreas[i] / maxAreas[i] <= 0.9){
+				selectableAreas++;
+			}
+		}
+		if (selectableAreas == 0){ //if there is not enough space in any draw area
+			StartCoroutine(EndGame(0));
+			return;
+		}
 		while(!ActivateDrawArea(rng.Next(0, drawAreas.transform.childCount))){
 			;
 		}
